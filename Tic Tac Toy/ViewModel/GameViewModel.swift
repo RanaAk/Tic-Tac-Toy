@@ -15,6 +15,7 @@ class GameViewModel {
     var currentPlayer = "X"
     var winner : String? = nil
     var showConfetti = false
+
     
     
     init(){
@@ -52,11 +53,69 @@ class GameViewModel {
     func computerMove(){
         guard winner == nil else { return }
         currentPlayer = "0"
+
         let Emptyslots  = calculateEmptyslots().shuffled()
         
         if let randomSlot = Emptyslots.randomElement() {
             let (rowIndex, colIndex) = randomSlot
-            board[rowIndex][colIndex] = "0"
+            
+            if board[1][1] == "" {
+                    board[1][1] = "0"
+                }
+                // horizontal blocking possibilities
+                else if board[0][0] == "X" && board[0][1] == "X" && board[0][2] == "" {
+                    board[0][2] = "0"
+                } else if board[0][0] == "X" && board[0][2] == "X" && board[0][1] == "" {
+                    board[0][1] = "0"
+                } else if board[0][1] == "X" && board[0][2] == "X" && board[0][0] == "" {
+                    board[0][0] = "0"
+                }else if board[2][0] == "X" && board[2][1] == "X" && board[0][0] == "" {
+                    board[2][2] = "0"
+                }else if board[2][1] == "X" && board[2][2] == "X" && board[2][0] == "" {
+                    board[2][0] = "0"
+                }
+            //Other
+            else if board[0][0] == "X" && board[1][0] == "X" && board[2][0] == "" {
+                board[2][0] = "0" // Block or win on first column
+            } else if board[0][0] == "X" && board[2][0] == "X" && board[1][0] == "" {
+                board[1][0] = "0" // Block or win on first column
+            } else if board[1][0] == "X" && board[2][0] == "X" && board[0][0] == "" {
+                board[0][0] = "0" // Block or win on first column
+            } else if board[0][2] == "X" && board[1][2] == "X" && board[2][2] == "" {
+                board[2][2] = "0" // Block or win on third column
+            } else if board[0][2] == "X" && board[2][2] == "X" && board[1][2] == "" {
+                board[1][2] = "0" // Block or win on third column
+            } else if board[1][2] == "X" && board[2][2] == "X" && board[0][2] == "" {
+                board[0][2] = "0" // Block or win on third column
+            }
+                //  other rows and vertical columns
+                else if board[1][0] == "X" && board[1][1] == "X" && board[1][2] == "" {
+                    board[1][2] = "0"
+                } else if board[1][0] == "X" && board[1][2] == "X" && board[1][1] == "" {
+                    board[1][1] = "0"
+                }
+                // Diagonal checks
+                else if board[0][0] == "X" && board[1][1] == "X" && board[2][2] == "" {
+                    board[2][2] = "0"
+                } else if board[0][0] == "X" && board[2][2] == "X" && board[1][1] == "" {
+                    board[1][1] = "0"
+                } else if board[1][1] == "X" && board[2][2] == "X" && board[0][0] == "" {
+                    board[0][0] = "0"
+                }
+                // corners
+                else if board[0][0] == "" {
+                    board[0][0] = "0"
+                } else if board[0][2] == "" {
+                    board[0][2] = "0"
+                } else if board[2][0] == "" {
+                    board[2][0] = "0"
+                } else if board[2][2] == "" {
+                    board[2][2] = "0"
+                }
+                //Random 
+                else {
+                    board[rowIndex][colIndex] = "0"
+                }
         }
         
         if checkWin(for: currentPlayer){
@@ -67,7 +126,12 @@ class GameViewModel {
             currentPlayer = "X"
         }
         
+        
+        
+        
     }
+    
+    
     
     func calculateEmptyslots() -> [(Int, Int)] {
         var Emptyslots : [(Int, Int)] = []
@@ -129,4 +193,22 @@ class GameViewModel {
         winner = nil
         showConfetti = false
     }
+    
+    
+    func findLastXIndex() -> (row: Int, col: Int)? {
+        var lastIndex: (row: Int, col: Int)? = nil
+
+        for (rowIndex, row) in board.enumerated() {
+            for (colIndex, value) in row.enumerated() {
+                if value == "X" {
+                    lastIndex = (row: rowIndex, col: colIndex)
+                }
+            }
+        }
+
+        return lastIndex
+    }
+    
 }
+
+
