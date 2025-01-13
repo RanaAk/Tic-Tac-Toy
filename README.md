@@ -2,7 +2,13 @@
 
 Tic Tac Toy is a beautifully designed **Tic Tac Toe game** for iOS, created using Swift and SwiftUI. This project is perfect for iOS developers who want to learn or practice building a game using **MVVM architecture**, **particle effects**, and modular components. 🕹️✨
 
-![App Demo](gifs/play.gif)
+___
+
+
+<div align="center">
+
+  <img src="gifs/play.gif" width="300">
+</div>
 
 ---
 
@@ -76,7 +82,10 @@ Follow these steps to get the project up and running on your local environment:
 ## 📸 Screenshots
 
 ### Gameplay Screen
-![Gameplay Screen](Screenshot.png)
+
+<div align="center">
+   <img src="Screenshot.png" width="300">
+</div>
 
 ---
 
